@@ -32,20 +32,33 @@ module.exports = [
 	},
 	{
 		entry: {
-			style: './base.scss'
+			'base': './base.scss'
 		},
 		output: {
-			path: __dirname,
-			filename: 'base.css'
+			path: path.join(__dirname, 'TwitterImageDownloader'),
+			filename: '[name].css'
 		},
 		module: {
-			rules: [{
-				test: /\.scss$/,
-				loader: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: 'css-loader!sass-loader'
-				})
-			}]
+			rules: [
+				{
+					test: /\.scss/,
+					use: ExtractTextPlugin.extract({
+						use:
+						[
+							{
+								loader: 'css-loader',
+								options: {
+									url: false,
+									importLoaders: 2
+								}
+							},
+							{
+								loader: 'sass-loader'
+							}
+						]
+					})
+				}
+			]
 		},
 		plugins: [
 			new ExtractTextPlugin('[name].css')
