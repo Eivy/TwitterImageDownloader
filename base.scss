@@ -1,0 +1,15 @@
+#imagedownloader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	.downloader_images {
+		display: flex;
+		flex-flow: row wrap;
+		height: 100%;
+		.downloader_image_box {
+			object-fit: cover;
+		}
+	}
+}

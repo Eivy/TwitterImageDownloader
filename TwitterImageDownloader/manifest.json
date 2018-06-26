@@ -1,0 +1,17 @@
+{
+  "description": "Help you to download images from twitter timeline",
+  "manifest_version": 2,
+  "name": "TwitterImageDownloader",
+  "version": "0.1",
+  "homepage_url": "https://github.com/Eivy/TwitterImageDownloader",
+  "background": {
+    "scripts": ["main.js"]
+  },
+  "browser_action": {
+    "default_title": "TwitterImageDownloader"
+  },
+  "permissions": [
+    "activeTab",
+    "downloads"
+  ]
+}
