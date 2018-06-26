@@ -4,12 +4,22 @@
 	left: 0;
 	height: 100%;
 	width: 100%;
+	background-color: rgba(0, 0, 0, .8);
+	z-index: 9999;
+	overflow: scroll;
 	.downloader_images {
 		display: flex;
 		flex-flow: row wrap;
-		height: 100%;
 		.downloader_image_box {
-			object-fit: cover;
+			width: 200px;
+			height: 200px;;
+			overflow: hidden;
+			padding: 10px;
+			img {
+				object-fit: cover;
+				height: 100%;
+				width: 100%;
+			}
 		}
 	}
 }
