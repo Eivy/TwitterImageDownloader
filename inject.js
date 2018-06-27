@@ -7,6 +7,32 @@ container.id = 'imagedownloader'
 container.onclick = () => {
 	container.remove()
 }
+
+let ok = document.createElement('button')
+ok.className = 'ok'
+ok.innerText = 'Download'
+ok.onclick = () => {
+	event.stopPropagation()
+	let urls = []
+	document.querySelectorAll('#imagedownloader input[type="checkbox"]').forEach(e => {
+		if (e.checked) {
+			urls.push(e.nextSibling.src)
+		}
+	})
+	chrome.runtime.sendMessage(urls)
+}
+
+let cancel = document.createElement('button')
+cancel.className = 'cancel'
+cancel.innerText = 'Cancel'
+cancel.onclick = () => {
+	event.stopPropagation()
+	container.remove()
+}
+
+container.appendChild(ok)
+container.appendChild(cancel)
+
 let images = document.createElement('div')
 images.className = 'downloader_images'
 document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e => {

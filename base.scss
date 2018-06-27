@@ -6,8 +6,37 @@ div#imagedownloader {
 	width: 100%;
 	background-color: rgba(0, 0, 0, .8);
 	z-index: 9999;
-	overflow: scroll;
+	overflow-y: scroll;
+	button{
+		z-index: 1;
+		position: fixed;
+		bottom: 2rem;
+		display: inline-block;
+		font-size: 1em;
+		line-height: 2;
+		text-decoration: none;
+		letter-spacing: 0.05em;
+		padding: 0.2em 1em;
+		border-radius: 3px;
+		cursor: pointer;
+		box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+		transition: .3s ease-out;
+		&.ok {
+			background-color: #26a69b;
+			color: #fff;
+			right: 7rem;
+		}
+		&.cancel {
+			background-color: #000;
+			color: #fff;
+			right: 2rem;
+		}
+		&:hover{
+			box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
+		}
+	}
 	div.downloader_images {
+		z-index: -1;
 		display: flex;
 		flex-flow: row wrap;
 		div.downloader_image_box {
