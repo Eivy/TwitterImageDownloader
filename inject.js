@@ -20,6 +20,7 @@ ok.onclick = () => {
 		}
 	})
 	chrome.runtime.sendMessage(urls)
+	container.remove()
 }
 
 let cancel = document.createElement('button')
