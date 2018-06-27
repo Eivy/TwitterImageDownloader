@@ -15,10 +15,7 @@ document.querySelectorAll('.AdaptiveMedia-photoContainer').forEach(e => {
 	copy.style.backgroundColor = ''
 	copy.onclick = (event) => {
 		event.stopPropagation()
-		console.log(copy.querySelector('img').src)
-		browser.downloads.download({
-			url: copy.querySelector('img').src + ':orig'
-		}).catch((reason) => { console.log(reason) })
+		chrome.runtime.sendMessage([copy.querySelector('img').src])
 	}
 	images.appendChild(copy)
 })
