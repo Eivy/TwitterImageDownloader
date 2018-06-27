@@ -35,6 +35,16 @@ container.appendChild(cancel)
 
 let images = document.createElement('div')
 images.className = 'downloader_images'
+container.appendChild(images)
+let shown = document.createElement('div')
+shown.className = 'image_viewer'
+shown.onclick = event => {
+	event.stopPropagation()
+	shown.classList.remove('shown')
+}
+let img = document.createElement('img')
+shown.appendChild(img)
+container.appendChild(shown)
 document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e => {
 	let copy = e.cloneNode()
 	let box = document.createElement('div')
@@ -46,9 +56,9 @@ document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e =
 	box.appendChild(copy)
 	box.onclick = (event) => {
 		event.stopPropagation()
-		chrome.runtime.sendMessage([copy.src])
+		shown.classList.add('shown')
+		img.src = copy.src
 	}
 	images.appendChild(box)
 })
-container.appendChild(images)
 document.body.appendChild(container)
