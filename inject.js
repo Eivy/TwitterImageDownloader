@@ -14,10 +14,8 @@ ok.innerText = 'Download'
 ok.onclick = () => {
 	event.stopPropagation()
 	let urls = []
-	document.querySelectorAll('#imagedownloader input[type="checkbox"]').forEach(e => {
-		if (e.checked) {
-			urls.push(e.nextSibling.src)
-		}
+	document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').forEach(e => {
+		urls.push(e.src)
 	})
 	chrome.runtime.sendMessage(urls)
 	container.remove()
@@ -50,15 +48,23 @@ document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e =
 	let copy = e.cloneNode()
 	let box = document.createElement('div')
 	box.className = 'downloader_image_box'
-	let ch = document.createElement('input')
-	ch.type = 'checkbox'
-	ch.onclick = (event) => { event.stopPropagation() }
-	box.appendChild(ch)
-	box.appendChild(copy)
-	box.onclick = (event) => {
+	let v = document.createElement('span')
+	v.className = 'view'
+	v.innerText = '👁'
+	v.onclick = (event) => {
 		event.stopPropagation()
 		shown.classList.add('shown')
 		img.src = copy.src
+	}
+	box.appendChild(v)
+	box.appendChild(copy)
+	box.onclick = (event) => {
+		event.stopPropagation()
+		if (box.classList.contains('selected')) {
+			box.classList.remove('selected')
+		} else {
+			box.classList.add('selected')
+		}
 	}
 	images.appendChild(box)
 })

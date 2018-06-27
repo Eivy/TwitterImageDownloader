@@ -53,15 +53,19 @@ div#imagedownloader {
 				height: 100%;
 				box-sizing: border-box;
 				transition: all 300ms 0s ease;
-				padding: .5rem;
-				&:hover {
-					padding: 0;
-				}
 			}
-			input[type="checkbox"] {
+			&.selected img {
+				border: 3px solid #26a69b;
+				box-shadow: 0 0 10px 0 rgba(38,166,155,0.8);
+			}
+			span.view {
 				position: absolute;
-				top: 1rem;
-				left: 1rem;
+				bottom: 1rem;
+				right: 1rem;
+				cursor: pointer;
+				&:hover {
+					background-color: rgba(38,166,155,0.8);
+				}
 			}
 		}
 	}
