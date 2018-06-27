@@ -4,7 +4,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = [
 	{
 		entry: {
-			'background': './background.js'
+			'background': './background.js',
+			'inject': './inject.js'
 		},
 		output: {
 			path: path.join(__dirname, '/TwitterImageDownloader'),
