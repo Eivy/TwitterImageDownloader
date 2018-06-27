@@ -20,7 +20,7 @@ document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e =
 	box.appendChild(copy)
 	box.onclick = (event) => {
 		event.stopPropagation()
-		chrome.runtime.sendMessage([copy.querySelector('img').src])
+		chrome.runtime.sendMessage([copy.src])
 	}
 	images.appendChild(box)
 })
