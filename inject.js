@@ -11,7 +11,7 @@ container.onclick = () => {
 let ok = document.createElement('button')
 ok.className = 'ok'
 ok.innerText = 'Download'
-ok.onclick = () => {
+ok.onclick = event => {
 	event.stopPropagation()
 	let urls = []
 	document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').forEach(e => {
@@ -24,7 +24,7 @@ ok.onclick = () => {
 let cancel = document.createElement('button')
 cancel.className = 'cancel'
 cancel.innerText = 'Cancel'
-cancel.onclick = () => {
+cancel.onclick = event => {
 	event.stopPropagation()
 	container.remove()
 }
@@ -51,14 +51,14 @@ document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e =
 	let v = document.createElement('span')
 	v.className = 'view'
 	v.innerText = '👁'
-	v.onclick = (event) => {
+	v.onclick = event => {
 		event.stopPropagation()
 		shown.classList.add('shown')
 		img.src = copy.src
 	}
 	box.appendChild(v)
 	box.appendChild(copy)
-	box.onclick = (event) => {
+	box.onclick = event => {
 		event.stopPropagation()
 		if (box.classList.contains('selected')) {
 			box.classList.remove('selected')
