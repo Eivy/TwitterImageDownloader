@@ -2,7 +2,7 @@
   "description": "Help you to download images from twitter timeline",
   "manifest_version": 2,
   "name": "TwitterImageDownloader",
-  "version": "0.1",
+  "version": "0.2",
   "homepage_url": "https://github.com/Eivy/TwitterImageDownloader",
   "background": {
     "scripts": ["background.js"]
