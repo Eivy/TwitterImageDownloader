@@ -44,6 +44,14 @@ shown.onclick = event => {
 let img = document.createElement('img')
 shown.appendChild(img)
 container.appendChild(shown)
+let more = document.createElement('div')
+more.className = 'get_more'
+more.innerText = '⏬'
+more.onclick = event => {
+	event.stopPropagation()
+	scrollTo(0, 99999)
+}
+container.appendChild(more)
 document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e => {
 	let copy = e.cloneNode()
 	let box = document.createElement('div')
@@ -68,4 +76,34 @@ document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e =
 	}
 	images.appendChild(box)
 })
+const observer = new MutationObserver((mutations) => {
+	document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e => {
+		if (document.querySelector('.downloader_image_box img[src="' + e.src + '"]')) {
+			return
+		}
+		let copy = e.cloneNode()
+		let box = document.createElement('div')
+		box.className = 'downloader_image_box'
+		let v = document.createElement('span')
+		v.className = 'view'
+		v.innerText = '👁'
+		v.onclick = event => {
+			event.stopPropagation()
+			shown.classList.add('shown')
+			img.src = copy.src
+		}
+		box.appendChild(v)
+		box.appendChild(copy)
+		box.onclick = event => {
+			event.stopPropagation()
+			if (box.classList.contains('selected')) {
+				box.classList.remove('selected')
+			} else {
+				box.classList.add('selected')
+			}
+		}
+		images.appendChild(box)
+	})
+})
+observer.observe(document.querySelector('.stream-container'), {attributes: true})
 document.body.appendChild(container)
