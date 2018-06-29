@@ -8,6 +8,12 @@ container.onclick = () => {
 	close()
 }
 
+container.onscroll = () => {
+	if (container.scrollTop + container.clientHeight > container.scrollHeight - container.clientHeight / 2) {
+		scrollTo(0, 99999)
+	}
+}
+
 let ok = document.createElement('button')
 ok.className = 'ok'
 ok.innerText = 'Download'
