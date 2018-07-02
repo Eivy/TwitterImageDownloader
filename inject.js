@@ -21,7 +21,7 @@ ok.onclick = event => {
 	event.stopPropagation()
 	let urls = []
 	document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').forEach(e => {
-		urls.push(e.src)
+		urls.push(e.src + ':orig')
 	})
 	chrome.runtime.sendMessage(urls)
 	close()

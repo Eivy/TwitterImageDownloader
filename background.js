@@ -9,7 +9,7 @@ async function download_item (request, sender, sendResponse) {
 			console.log(i)
 			let s = i.split('/')
 			try {
-				chrome.downloads.download({url: i + ':orig', filename: (result.path || '') + s[s.length - 1]})
+				chrome.downloads.download({url: i, filename: (result.path || '') + s[s.length - 1]})
 			} catch (e) {
 				console.log(e)
 			}
