@@ -5,7 +5,8 @@ module.exports = [
 	{
 		entry: {
 			'background': './background.js',
-			'inject': './inject.js'
+			'inject': './inject.js',
+			'options': './options.js'
 		},
 		output: {
 			path: path.join(__dirname, '/TwitterImageDownloader'),

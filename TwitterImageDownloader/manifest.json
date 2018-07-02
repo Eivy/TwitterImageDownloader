@@ -10,8 +10,12 @@
   "browser_action": {
     "default_title": "TwitterImageDownloader"
   },
+  "options_ui": {
+    "page": "options.html"
+  },
   "permissions": [
     "activeTab",
-    "downloads"
+    "downloads",
+    "storage"
   ]
 }
