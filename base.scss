@@ -25,6 +25,20 @@ div#imagedownloader {
 			background-color: #26a69b;
 			color: #fff;
 			right: 8rem;
+			.badge {
+				background: #FF5722;
+				border-radius: 50%;
+				position: absolute;
+				top: 0;
+				right: 0;
+				height: 1.5rem;
+				width: 1.5rem;
+				padding: 0;
+				line-height: 1.5;
+				display: inline-block;
+				transform: translate(50%, -50%);
+				visibility: hidden;
+			}
 		}
 		&.cancel {
 			background-color: #000;

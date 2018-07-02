@@ -26,6 +26,9 @@ ok.onclick = event => {
 	chrome.runtime.sendMessage(urls)
 	close()
 }
+let badge = document.createElement('span')
+badge.className = 'badge'
+ok.appendChild(badge)
 
 let cancel = document.createElement('button')
 cancel.className = 'cancel'
@@ -90,6 +93,8 @@ function appendItems (target) {
 			} else {
 				box.classList.add('selected')
 			}
+			badge.innerText = document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').length
+			badge.style.visibility = badge.innerText !== '0' ? 'visible' : 'hidden'
 		}
 		target.appendChild(box)
 	})
