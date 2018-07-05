@@ -69,11 +69,12 @@ observer.observe(document.querySelector('.stream-container'), {attributes: true}
 document.body.appendChild(container)
 
 function appendItems (target) {
-	document.querySelectorAll('.stream img[src*="pbs.twimg.com/media"]').forEach(e => {
+	document.querySelectorAll('.js-navigable-stream img[src*="pbs.twimg.com/media"]').forEach(e => {
 		if (document.querySelector('.downloader_image_box img[src="' + e.src + '"]')) {
 			return
 		}
-		let copy = e.cloneNode()
+		let item = document.createElement('img')
+		item.src = e.src
 		let box = document.createElement('div')
 		box.className = 'downloader_image_box'
 		let v = document.createElement('span')
@@ -82,10 +83,10 @@ function appendItems (target) {
 		v.onclick = event => {
 			event.stopPropagation()
 			shown.classList.add('shown')
-			img.src = copy.src
+			img.src = e.src
 		}
 		box.appendChild(v)
-		box.appendChild(copy)
+		box.appendChild(item)
 		box.onclick = event => {
 			event.stopPropagation()
 			if (box.classList.contains('selected')) {
