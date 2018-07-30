@@ -16,6 +16,8 @@
   "permissions": [
     "activeTab",
     "downloads",
-    "storage"
+    "storage",
+    "webRequest",
+    "<all_urls>"
   ]
 }

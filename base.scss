@@ -81,8 +81,36 @@ div#imagedownloader {
 				}
 			}
 		}
+		div.downloader_video_box {
+			width: 200px;
+			height: 200px;;
+			overflow: hidden;
+			padding: 10px;
+			margin: 0;
+			position: relative;
+			text-align: center;
+			video {
+				object-fit: cover;
+				width: 100%;
+				height: 100%;
+				box-sizing: border-box;
+			}
+			&.selected img {
+				border: 3px solid #26a69b;
+				box-shadow: 0 0 10px 0 rgba(38,166,155,0.8);
+			}
+			span.view {
+				position: absolute;
+				bottom: 1rem;
+				right: 1rem;
+				cursor: pointer;
+				&:hover {
+					background-color: rgba(38,166,155,0.8);
+				}
+			}
+		}
 	}
-	.image_viewer {
+	.image_viewer, .video_viewer {
 		z-index: 2;
 		height: 0;
 		display: flex;
@@ -95,7 +123,7 @@ div#imagedownloader {
 			height: 100%;
 			width: 100%;
 		}
-		img {
+		img, video {
 			max-height: 95%;
 			max-width: 95%;
 		}
