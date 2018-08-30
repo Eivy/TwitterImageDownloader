@@ -117,7 +117,9 @@ div#imagedownloader {
 		justify-content: center;
 		align-items: center;
 		background-color: rgba(80, 80, 80, 0.8);
+		visibility: hidden;
 		&.shown {
+			visibility: visible;
 			position: fixed;
 			top: 0;
 			height: 100%;
@@ -126,6 +128,19 @@ div#imagedownloader {
 		img, video {
 			max-height: 95%;
 			max-width: 95%;
+		}
+		span {
+			position: absolute;
+			top: 50%;
+			font-size: 3em;
+			color: rgb(30, 30, 30);
+			cursor: pointer;
+			&:first-child {
+				left: 0;
+			}
+			&:last-child {
+				right: 0;
+			}
 		}
 	}
 	.get_more {

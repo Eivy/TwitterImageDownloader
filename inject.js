@@ -69,10 +69,28 @@ shown.onclick = event => {
 	event.stopPropagation()
 	shown.classList.remove('shown')
 }
+let preBtn = document.createElement('span')
+preBtn.innerText = '⬅'
+preBtn.onclick = event => {
+	event.stopPropagation()
+	let shownImg = document.querySelector('.image_viewer img')
+	let next = document.querySelector('.downloader_image_box img[src="' + shownImg.src + '"]').parentElement.previousElementSibling.lastChild
+	shownImg.src = next.src
+}
+shown.appendChild(preBtn)
 let img = document.createElement('img')
 shown.appendChild(img)
 container.appendChild(shown)
 container.appendChild(videoView)
+let nextBtn = document.createElement('span')
+nextBtn.innerText = '➡'
+nextBtn.onclick = event => {
+	event.stopPropagation()
+	let shownImg = document.querySelector('.image_viewer img')
+	let next = document.querySelector('.downloader_image_box img[src="' + shownImg.src + '"]').parentElement.nextElementSibling.lastChild
+	shownImg.src = next.src
+}
+shown.appendChild(nextBtn)
 let more = document.createElement('div')
 more.className = 'get_more'
 more.innerText = '⏬'
