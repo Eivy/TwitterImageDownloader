@@ -111,7 +111,7 @@ try {
 document.body.appendChild(container)
 
 function appendItems (target) {
-	document.querySelectorAll('.js-navigable-stream img[src*="pbs.twimg.com/media"], .js-navigable-stream .AdaptiveMedia div.PlayableMedia-player').forEach(async e => {
+	document.querySelectorAll('.AdaptiveMedia img[src*="pbs.twimg.com/media"], .MomentMediaItem img[src*="pbs.twimg.com/media"], .AdaptiveMedia div.PlayableMedia-player').forEach(async e => {
 		var item
 		if (e.tagName.toLowerCase() === 'div') {
 			item = getVideoItem(e)
