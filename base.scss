@@ -48,6 +48,12 @@ div#imagedownloader {
 		&:hover{
 			box-shadow: 0 .5rem 2rem 0 rgba(255,255,255,0.14);
 		}
+		&.select {
+			background-color: #000;
+			color: #fff;
+			right: 2rem;
+			bottom: 5rem;
+		}
 	}
 	div.downloader_images {
 		z-index: -1;
