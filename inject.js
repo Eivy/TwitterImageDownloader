@@ -50,8 +50,19 @@ cancel.onclick = event => {
 	close()
 }
 
+let select = document.createElement('button')
+select.className = 'select'
+select.innerText = 'Select All'
+select.onclick = event => {
+	event.stopPropagation()
+	document.querySelectorAll('#imagedownloader .downloader_image_box').forEach(e => {
+		e.classList.add('selected')
+	})
+}
+
 container.appendChild(ok)
 container.appendChild(cancel)
+container.appendChild(select)
 
 let images = document.createElement('div')
 images.className = 'downloader_images'
