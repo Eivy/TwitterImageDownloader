@@ -103,7 +103,11 @@ appendItems(images)
 const observer = new MutationObserver((mutations) => {
 	appendItems(images)
 })
-observer.observe(document.querySelector('.stream-container'), {attributes: true})
+try {
+	observer.observe(document.querySelector('.stream-container'), {attributes: true})
+} catch (ex) {
+	console.log(ex)
+}
 document.body.appendChild(container)
 
 function appendItems (target) {
