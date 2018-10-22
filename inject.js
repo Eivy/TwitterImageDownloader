@@ -101,6 +101,7 @@ function appendItems (target) {
 }
 
 function showContextMenu (e) {
+	e.preventDefault()
 	closeContextMenu()
 	console.log(e)
 	let menu = document.createElement('ul')
@@ -133,7 +134,6 @@ function showContextMenu (e) {
 	menu.style.top = e.y + container.scrollTop + 'px'
 	menu.style.left = e.x + 'px'
 	container.appendChild(menu)
-	return false
 }
 
 function closeContextMenu () {
