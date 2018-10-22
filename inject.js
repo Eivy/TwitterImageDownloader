@@ -228,16 +228,19 @@ async function showItem (item) {
 	shown.className = 'image_viewer'
 	shown.onclick = event => {
 		event.stopPropagation()
+		document.removeEventListener('keydown', keydownOnImageViewer)
 		shown.remove()
 	}
 	let preBtn = document.createElement('div')
 	preBtn.className = 'button'
 	preBtn.innerText = '⬅'
 	preBtn.onclick = event => {
+		event.stopPropagation()
 		let shownMedia = document.querySelector('.image_viewer img, .image_viewer video')
 		let next = document.querySelector('.downloader_image_box img[src="' +
 			(shownMedia.tagName.toLowerCase() === 'video' ? shownMedia.poster : shownMedia.src) +
 			'"]').parentElement.previousElementSibling.firstChild
+		shownMedia.parentElement.remove()
 		next.click()
 	}
 	shown.appendChild(preBtn)
@@ -246,14 +249,25 @@ async function showItem (item) {
 	nextBtn.className = 'button'
 	nextBtn.innerText = '➡'
 	nextBtn.onclick = event => {
+		event.stopPropagation()
 		let shownMedia = document.querySelector('.image_viewer img, .image_viewer video')
 		let next = document.querySelector('.downloader_image_box img[src="' +
 			(shownMedia.tagName.toLowerCase() === 'video' ? shownMedia.poster : shownMedia.src) +
 			'"]').parentElement.nextElementSibling.firstChild
+		shownMedia.parentElement.remove()
 		next.click()
 	}
 	shown.appendChild(nextBtn)
 	container.appendChild(shown)
+	document.addEventListener('keydown', keydownOnImageViewer)
+}
+
+function keydownOnImageViewer (e) {
+	if (e.keyCode === 37) {
+		document.querySelectorAll('.image_viewer .button')[0].click()
+	} else if (e.keyCode === 39) {
+		document.querySelectorAll('.image_viewer .button')[1].click()
+	}
 }
 
 async function getVideo (id) {
