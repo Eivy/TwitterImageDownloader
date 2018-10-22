@@ -233,7 +233,8 @@ async function showItem (item) {
 		event.stopPropagation()
 		shown.remove()
 	}
-	let preBtn = document.createElement('span')
+	let preBtn = document.createElement('div')
+	preBtn.className = 'button'
 	preBtn.innerText = '⬅'
 	preBtn.onclick = event => {
 		let shownMedia = document.querySelector('.image_viewer img, .image_viewer video')
@@ -245,7 +246,8 @@ async function showItem (item) {
 	}
 	shown.appendChild(preBtn)
 	shown.appendChild(item)
-	let nextBtn = document.createElement('span')
+	let nextBtn = document.createElement('div')
+	nextBtn.className = 'button'
 	nextBtn.innerText = '➡'
 	nextBtn.onclick = event => {
 		let shownMedia = document.querySelector('.image_viewer img, .image_viewer video')

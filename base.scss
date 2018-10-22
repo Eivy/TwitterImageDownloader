@@ -131,9 +131,11 @@ div#imagedownloader {
 			max-height: 95%;
 			max-width: 95%;
 		}
-		span {
+		.button {
 			position: absolute;
-			top: 50%;
+			display: flex;
+			align-items: center;
+			height: 100%;
 			font-size: 3em;
 			color: rgb(30, 30, 30);
 			cursor: pointer;
@@ -142,6 +144,9 @@ div#imagedownloader {
 			}
 			&:last-child {
 				right: 0;
+			}
+			&:hover {
+				text-shadow: 0 0 5px rgba(255,255,255,0.5);
 			}
 		}
 	}
