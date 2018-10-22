@@ -103,7 +103,6 @@ function appendItems (target) {
 function showContextMenu (e) {
 	e.preventDefault()
 	closeContextMenu()
-	console.log(e)
 	let menu = document.createElement('ul')
 	menu.className = 'menu'
 	menu.addEventListener('click', (ev) => {
@@ -114,7 +113,6 @@ function showContextMenu (e) {
 	scroll.innerHTML = 'Scroll to in timeline'
 	scroll.addEventListener('click', () => {
 		close()
-		console.log(e.target.src)
 		let item = document.querySelector('img[src="' + e.target.src + '"],div.PlayableMedia-player[style*="' + e.target.src + '"]')
 		item.scrollIntoView()
 	})
@@ -196,7 +194,6 @@ function getVideoItem (e) {
 	v.onclick = async (event) => {
 		event.stopPropagation()
 		let url = await getVideo(id)
-		console.log(url)
 		if (url !== '') {
 			let video = document.createElement('video')
 			video.src = url
@@ -238,7 +235,6 @@ async function showItem (item) {
 	preBtn.innerText = '⬅'
 	preBtn.onclick = event => {
 		let shownMedia = document.querySelector('.image_viewer img, .image_viewer video')
-		console.log(shownMedia.tagName)
 		let next = document.querySelector('.downloader_image_box img[src="' +
 			(shownMedia.tagName.toLowerCase() === 'video' ? shownMedia.poster : shownMedia.src) +
 			'"]').parentElement.previousElementSibling.firstChild
@@ -310,7 +306,6 @@ async function getVideo (id) {
 			})
 			let blob = new Blob([buffer], {type: 'video/mp2t'})
 			url = window.URL ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob)
-			console.log(url)
 		}
 	}
 	return url
