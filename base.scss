@@ -155,4 +155,18 @@ div#imagedownloader {
 		color: #fff;
 		text-align: center;
 	}
+	.menu {
+		position: absolute;
+		background: white;
+		border: 1px solid;
+		border-radius: 5px;
+		li {
+			padding: 5px;
+			color: black;
+			&:hover {
+				background: skyblue;
+				color: white;
+			}
+		}
+	}
 }

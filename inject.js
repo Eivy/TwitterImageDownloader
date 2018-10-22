@@ -135,12 +135,56 @@ function appendItems (target) {
 	})
 }
 
+function showContextMenu (e) {
+	closeContextMenu()
+	console.log(e)
+	let menu = document.createElement('ul')
+	menu.className = 'menu'
+	menu.addEventListener('click', (ev) => {
+		ev.stopPropagation()
+		closeContextMenu()
+	})
+	let scroll = document.createElement('li')
+	scroll.innerHTML = 'Scroll to in timeline'
+	scroll.addEventListener('click', () => {
+		close()
+		console.log(e.target.src)
+		let item = document.querySelector('img[src="' + e.target.src + '"],div.PlayableMedia-player[style*="' + e.target.src + '"]')
+		item.scrollIntoView()
+	})
+	let view = document.createElement('li')
+	view.innerHTML = 'Show Fullscreen'
+	view.addEventListener('click', () => {
+		e.target.previousElementSibling.click()
+	})
+	let newtab = document.createElement('li')
+	newtab.innerHTML = 'Open image in new tab'
+	newtab.addEventListener('click', () => {
+		window.open(e.target.src)
+	})
+	menu.appendChild(scroll)
+	menu.appendChild(view)
+	menu.appendChild(newtab)
+	menu.style.top = e.y + container.scrollTop + 'px'
+	menu.style.left = e.x + 'px'
+	container.appendChild(menu)
+	return false
+}
+
+function closeContextMenu () {
+	let menu = document.querySelector('#imagedownloader .menu')
+	if (menu) {
+		menu.remove()
+	}
+}
+
 function getImageItem (e) {
 	if (document.querySelector('.downloader_image_box img[src="' + e.src + '"]')) {
 		return null
 	}
 	let item = document.createElement('img')
 	item.src = e.src
+	item.oncontextmenu = showContextMenu
 	let box = document.createElement('div')
 	box.className = 'downloader_image_box'
 	box.classList.add('image')
@@ -156,6 +200,7 @@ function getImageItem (e) {
 	box.appendChild(item)
 	box.onclick = event => {
 		event.stopPropagation()
+		closeContextMenu()
 		if (box.classList.contains('selected')) {
 			box.classList.remove('selected')
 		} else {
@@ -172,9 +217,8 @@ function getVideoItem (e) {
 		return null
 	}
 	let item = document.createElement('img')
-	console.log(e)
-	console.log(e.style.backgroundImage)
 	item.src = e.style.backgroundImage.slice(5, -2)
+	item.oncontextmenu = showContextMenu
 	while (e.parentNode.tagName.toLowerCase() !== 'li') {
 		e = e.parentNode
 	}
@@ -191,6 +235,7 @@ function getVideoItem (e) {
 	box.appendChild(item)
 	box.onclick = event => {
 		event.stopPropagation()
+		closeContextMenu()
 		if (box.classList.contains('selected')) {
 			box.classList.remove('selected')
 		} else {
