@@ -67,41 +67,6 @@ container.appendChild(select)
 let images = document.createElement('div')
 images.className = 'downloader_images'
 container.appendChild(images)
-let videoView = document.createElement('div')
-videoView.className = 'video_viewer'
-videoView.onclick = event => {
-	event.stopPropagation()
-	videoView.classList.remove('shown')
-	videoView.innerHTML = ''
-}
-let shown = document.createElement('div')
-shown.className = 'image_viewer'
-shown.onclick = event => {
-	event.stopPropagation()
-	shown.classList.remove('shown')
-}
-let preBtn = document.createElement('span')
-preBtn.innerText = '⬅'
-preBtn.onclick = event => {
-	event.stopPropagation()
-	let shownImg = document.querySelector('.image_viewer img')
-	let next = document.querySelector('.downloader_image_box img[src="' + shownImg.src + '"]').parentElement.previousElementSibling.lastChild
-	shownImg.src = next.src
-}
-shown.appendChild(preBtn)
-let img = document.createElement('img')
-shown.appendChild(img)
-container.appendChild(shown)
-container.appendChild(videoView)
-let nextBtn = document.createElement('span')
-nextBtn.innerText = '➡'
-nextBtn.onclick = event => {
-	event.stopPropagation()
-	let shownImg = document.querySelector('.image_viewer img')
-	let next = document.querySelector('.downloader_image_box img[src="' + shownImg.src + '"]').parentElement.nextElementSibling.lastChild
-	shownImg.src = next.src
-}
-shown.appendChild(nextBtn)
 let more = document.createElement('div')
 more.className = 'get_more'
 more.innerText = '⏬'
@@ -193,8 +158,9 @@ function getImageItem (e) {
 	v.innerText = '👁'
 	v.onclick = event => {
 		event.stopPropagation()
-		shown.classList.add('shown')
-		img.src = e.src
+		let image = document.createElement('img')
+		image.src = e.src
+		showItem(image)
 	}
 	box.appendChild(v)
 	box.appendChild(item)
@@ -227,7 +193,20 @@ function getVideoItem (e) {
 	let v = document.createElement('span')
 	v.className = 'view'
 	v.innerText = '📹'
-	v.onclick = (event) => { showVideo(event, e, id, item) }
+	v.onclick = async (event) => {
+		event.stopPropagation()
+		let url = await getVideo(id)
+		console.log(url)
+		if (url !== '') {
+			let video = document.createElement('video')
+			video.src = url
+			video.poster = item.src
+			video.setAttribute('controls', '')
+			video.setAttribute('autoplay', '')
+			video.setAttribute('loop', '')
+			showItem(video)
+		}
+	}
 	let box = document.createElement('div')
 	box.className = 'downloader_image_box'
 	box.classList.add('video')
@@ -247,20 +226,36 @@ function getVideoItem (e) {
 	return box
 }
 
-async function showVideo (event, e, id, item) {
-	event.stopPropagation()
-	console.log(e)
-	let video = document.createElement('video')
-	let url = await getVideo(id)
-	if (url !== '') {
-		video.src = url
-		item.video_url = url
-		videoView.appendChild(video)
+async function showItem (item) {
+	let shown = document.createElement('div')
+	shown.className = 'image_viewer'
+	shown.onclick = event => {
+		event.stopPropagation()
+		shown.remove()
 	}
-	video.setAttribute('controls', '')
-	video.setAttribute('autoplay', '')
-	video.setAttribute('loop', '')
-	videoView.classList.add('shown')
+	let preBtn = document.createElement('span')
+	preBtn.innerText = '⬅'
+	preBtn.onclick = event => {
+		let shownMedia = document.querySelector('.image_viewer img, .image_viewer video')
+		console.log(shownMedia.tagName)
+		let next = document.querySelector('.downloader_image_box img[src="' +
+			(shownMedia.tagName.toLowerCase() === 'video' ? shownMedia.poster : shownMedia.src) +
+			'"]').parentElement.previousElementSibling.firstChild
+		next.click()
+	}
+	shown.appendChild(preBtn)
+	shown.appendChild(item)
+	let nextBtn = document.createElement('span')
+	nextBtn.innerText = '➡'
+	nextBtn.onclick = event => {
+		let shownMedia = document.querySelector('.image_viewer img, .image_viewer video')
+		let next = document.querySelector('.downloader_image_box img[src="' +
+			(shownMedia.tagName.toLowerCase() === 'video' ? shownMedia.poster : shownMedia.src) +
+			'"]').parentElement.nextElementSibling.firstChild
+		next.click()
+	}
+	shown.appendChild(nextBtn)
+	container.appendChild(shown)
 }
 
 async function getVideo (id) {
