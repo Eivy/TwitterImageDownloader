@@ -63,8 +63,8 @@ div#imagedownloader {
 			width: 200px;
 			height: 200px;;
 			overflow: hidden;
-			padding: 10px;
-			margin: 0;
+			padding: 0;
+			margin: 10px;
 			position: relative;
 			text-align: center;
 			img {
@@ -79,8 +79,8 @@ div#imagedownloader {
 			}
 			span.view {
 				position: absolute;
-				bottom: 1rem;
-				right: 1rem;
+				bottom: 5px;
+				right: 5px;
 				cursor: pointer;
 				&:hover {
 					background-color: rgba(38,166,155,0.8);
