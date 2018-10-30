@@ -119,17 +119,18 @@ div#imagedownloader {
 	.image_viewer {
 		z-index: 2;
 		height: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 		background-color: rgba(80, 80, 80, 0.8);
 		position: fixed;
 		top: 0;
 		height: 100%;
 		width: 100%;
 		img, video {
+			position: absolute;
 			max-height: 95%;
 			max-width: 95%;
+			top: 50vh;
+			left: 50vw;
+			transform: translate(-50%, -50%);
 		}
 		.button {
 			position: absolute;
@@ -139,6 +140,7 @@ div#imagedownloader {
 			font-size: 3em;
 			color: rgb(30, 30, 30);
 			cursor: pointer;
+			z-index: 99;
 			&:first-child {
 				left: 0;
 			}
@@ -146,8 +148,15 @@ div#imagedownloader {
 				right: 0;
 			}
 			&:hover {
-				text-shadow: 0 0 5px rgba(255,255,255,0.5);
+				color: white;
 			}
+		}
+		.closer {
+			position: fixed;
+			float: right;
+			top: 5px;
+			right: 5px;
+			z-index: 9999;
 		}
 	}
 	.get_more {

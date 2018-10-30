@@ -231,6 +231,15 @@ async function showItem (item) {
 		document.removeEventListener('keydown', keydownOnImageViewer)
 		shown.remove()
 	}
+	let close = document.createElement('span')
+	close.innerHTML = '❌'
+	close.className = 'closer'
+	close.onclick = event => {
+		event.stopPropagation()
+		document.removeEventListener('keydown', keydownOnImageViewer)
+		shown.remove()
+	}
+	shown.appendChild(close)
 	let preBtn = document.createElement('div')
 	preBtn.className = 'button'
 	preBtn.innerText = '⬅'
