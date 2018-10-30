@@ -155,6 +155,10 @@ div#imagedownloader {
 		line-height: 5rem;
 		color: #fff;
 		text-align: center;
+		cursor: pointer;
+		&:hover {
+			text-shadow: 0 0 8px rgba(255,255,255,0.8);
+		}
 	}
 	.menu {
 		position: absolute;
