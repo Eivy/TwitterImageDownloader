@@ -7,6 +7,10 @@ chrome.storage.local.get('use_id', (result) => {
 	id.checked = result.use_id || false
 })
 function saveOptions () {
-	chrome.storage.local.set({path: dir.value.replace(/\/+$/, '') + '/', use_id: id.checked})
+	let path = dir.value.replace(/\/+$/, '') + '/'
+	if (path === '/') {
+		path = ''
+	}
+	chrome.storage.local.set({path, use_id: id.checked})
 }
 document.querySelector('form').addEventListener('submit', saveOptions)
