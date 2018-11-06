@@ -7,19 +7,32 @@ var authorization = ''
 var csrf_token = ''
 
 function download_item (request) {
-	chrome.storage.local.get('path', function (result) {
-		for (let i of request) {
-			let s = i.split('/')
-			let name = (result.path || '') + s[s.length - 1].replace(/:.*$/, '')
-			if (i.match('blob:')) {
-				name += '.ts'
+	chrome.storage.local.get('path', result => {
+		chrome.storage.local.get('use_id', r => {
+			if (r.use_id) {
+				for (let i of request) {
+					i.filename = (result.path || '') + i.filename
+					try {
+						chrome.downloads.download(i)
+					} catch (e) {
+						console.log(e)
+					}
+				}
+			} else {
+				for (let i of request) {
+					let s = i.url.split('/')
+					let name = (result.path || '') + s[s.length - 1].replace(/:.*$/, '')
+					if (i.url.match('blob:')) {
+						name += '.ts'
+					}
+					try {
+						chrome.downloads.download({url: i.url, filename: name})
+					} catch (e) {
+						console.log(e)
+					}
+				}
 			}
-			try {
-				chrome.downloads.download({url: i, filename: name})
-			} catch (e) {
-				console.log(e)
-			}
-		}
+		})
 	})
 }
 

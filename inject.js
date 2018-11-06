@@ -25,14 +25,35 @@ ok.onclick = async event => {
 	event.stopPropagation()
 	let urls = []
 	document.querySelectorAll('#imagedownloader .downloader_image_box.selected.image img').forEach(e => {
-		urls.push(e.src + ':orig')
+		let src = document.querySelector('img[src="' + e.src + '"]')
+		while (!src.hasAttribute('data-item-id')) {
+			src = src.parentElement
+		}
+		let imgs = null
+		if (src.classList.contains('AdaptiveStreamGridImage')) {
+			imgs = document.querySelectorAll('span[data-item-id="' + src.getAttribute('data-item-id') + '"] img')
+		} else {
+			imgs = document.querySelectorAll('div[data-item-id="' + src.getAttribute('data-item-id') + '"] .AdaptiveMedia img')
+		}
+		var idx = 0
+		for (;idx < imgs.length; idx++) {
+			if (imgs[idx].src === e.src) {
+				break
+			}
+		}
+		let tmp = e.src.split('.')
+		urls.push({url: e.src + ':orig', filename: [src.getAttribute('data-screen-name'), src.getAttribute('data-item-id'), idx].join('_') + '.' + tmp[tmp.length - 1]})
 	})
 	let videos = document.querySelectorAll('#imagedownloader .downloader_image_box.selected.video img')
 	for (let video of videos) {
+		let src = document.querySelector('div[data-item-id="' + video.id + '"]')
 		if (video.hasOwnProperty('video_url')) {
-			urls.push(video.video_url)
+			let tmp = video.video_url.split('.')
+			urls.push({url: video.video_url, filename: [src.getAttribute('data-screen-name'), src.getAttribute('data-item-id')].join('_') + '.' + tmp[tmp.length - 1]})
 		} else {
-			urls.push(await getVideo(video.id))
+			let url = await getVideo(video.id)
+			let tmp = url.split('.')
+			urls.push({url, filename: [src.getAttribute('data-screen-name'), src.getAttribute('data-item-id')].join('_') + '.' + tmp[tmp.length - 1]})
 		}
 	}
 	chrome.runtime.sendMessage(urls)
