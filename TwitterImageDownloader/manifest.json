@@ -18,6 +18,6 @@
     "downloads",
     "storage",
     "webRequest",
-    "<all_urls>"
+    "*://*.twitter.com/*"
   ]
 }
