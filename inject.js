@@ -14,7 +14,7 @@ container.onclick = () => {
 
 container.onscroll = () => {
 	if (container.scrollTop + container.clientHeight > container.scrollHeight - container.clientHeight / 2) {
-		scrollTo(0, 99999)
+		scrollTo(0, document.body.scrollHeight)
 	}
 }
 
