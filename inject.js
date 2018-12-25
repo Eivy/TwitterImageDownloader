@@ -287,6 +287,29 @@ function doJob () {
 		shown.appendChild(nextBtn)
 		container.appendChild(shown)
 		document.addEventListener('keydown', keydownOnImageViewer)
+		let slider = document.createElement('input')
+		slider.type = 'range'
+		slider.min = 10
+		slider.max = 500
+		slider.value = 100
+		slider.addEventListener('input', () => {
+			let view = shown.querySelector('img')
+			view.style.width = slider.value + '%'
+		})
+		slider.addEventListener('mousedown', event => {
+			event.stopPropagation()
+			shown.style.overflow = 'auto'
+			shown.style.textAlign = 'center'
+			let view = shown.querySelector('img')
+			view.style.top = 'unset'
+			view.style.left = 'unset'
+			view.style.maxHeight = 'unset'
+			view.style.maxWidth = 'unset'
+			view.style.position = 'relative'
+			view.style.transform = 'unset'
+		})
+		slider.addEventListener('click', event => { event.stopPropagation() })
+		shown.appendChild(slider)
 	}
 
 	function keydownOnImageViewer (e) {
