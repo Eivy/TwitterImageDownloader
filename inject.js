@@ -1,10 +1,15 @@
 function doJob () {
+	var d = document.querySelector('#imagedownloader')
+	if (d) {
+		d.remove()
+	}
 	var auth = {}
 	chrome.runtime.sendMessage({id: ''}, (value) => {
 		auth = value
 	})
 	let container = document.createElement('div')
 	container.id = 'imagedownloader'
+	container.path = window.location.toString()
 	container.onclick = () => {
 		close()
 	}
@@ -309,7 +314,7 @@ function doJob () {
 			view.style.transform = 'unset'
 		})
 		slider.addEventListener('click', event => { event.stopPropagation() })
-		let input = document.createElement('div')
+		let input = document.createElement('span')
 		let sbefore = document.createElement('span')
 		sbefore.innerHTML = '0.1x'
 		let safter = document.createElement('span')
@@ -418,7 +423,7 @@ function doJob () {
 }
 
 var d = document.querySelector('#imagedownloader')
-if (d) {
+if (d && d.getAttribute('path') === window.location.toString()) {
 	d.style.display = 'block'
 } else {
 	doJob()

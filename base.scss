@@ -6,7 +6,7 @@ div#imagedownloader {
 	width: 100%;
 	background-color: rgba(0, 0, 0, .8);
 	z-index: 9999;
-	overflow-y: scroll;
+	overflow-y: auto;
 	button{
 		z-index: 1;
 		position: fixed;
