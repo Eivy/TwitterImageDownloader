@@ -153,6 +153,7 @@ div#imagedownloader {
 			}
 			&:last-of-type {
 				right: 0;
+				padding-right: 1em;
 			}
 			&:hover {
 				color: white;
@@ -162,7 +163,7 @@ div#imagedownloader {
 			z-index: 999;
 			position: fixed;
 			bottom: 10px;
-			right: 10px;
+			right: 2em;
 			span {
 				color: white;
 			}
