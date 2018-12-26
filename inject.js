@@ -309,7 +309,16 @@ function doJob () {
 			view.style.transform = 'unset'
 		})
 		slider.addEventListener('click', event => { event.stopPropagation() })
-		shown.appendChild(slider)
+		let input = document.createElement('div')
+		let sbefore = document.createElement('span')
+		sbefore.innerHTML = '0.1x'
+		let safter = document.createElement('span')
+		safter.innerHTML = '10x'
+		input.appendChild(sbefore)
+		input.appendChild(slider)
+		input.appendChild(safter)
+		input.className = 'input'
+		shown.appendChild(input)
 	}
 
 	function keydownOnImageViewer (e) {
