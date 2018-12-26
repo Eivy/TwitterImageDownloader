@@ -7,6 +7,12 @@ div#imagedownloader {
 	background-color: rgba(0, 0, 0, .8);
 	z-index: 9999;
 	overflow-y: auto;
+	input#size {
+		position: fixed;
+		bottom: 0;
+		right: 0;
+		z-index: 1;
+	}
 	button{
 		z-index: 1;
 		position: fixed;
@@ -60,8 +66,6 @@ div#imagedownloader {
 		display: flex;
 		flex-flow: row wrap;
 		div.downloader_image_box {
-			width: 200px;
-			height: 200px;;
 			overflow: hidden;
 			padding: 0;
 			margin: 10px;
@@ -88,8 +92,8 @@ div#imagedownloader {
 			}
 		}
 		div.downloader_video_box {
-			width: 200px;
-			height: 200px;;
+			width: 25vw;
+			height: 25vw;;
 			overflow: hidden;
 			padding: 10px;
 			margin: 0;

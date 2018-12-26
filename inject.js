@@ -9,7 +9,7 @@ function doJob () {
 	})
 	let container = document.createElement('div')
 	container.id = 'imagedownloader'
-	container.path = window.location.toString()
+	container.setAttribute('path', window.location.toString())
 	container.onclick = () => {
 		close()
 	}
@@ -86,6 +86,21 @@ function doJob () {
 	container.appendChild(ok)
 	container.appendChild(cancel)
 	container.appendChild(select)
+
+	let listSlider = document.createElement('input')
+	listSlider.id = 'size'
+	listSlider.type = 'range'
+	listSlider.min = 2
+	listSlider.max = 100
+	listSlider.value = 12
+	listSlider.addEventListener('click', event => { event.stopPropagation() })
+	listSlider.addEventListener('input', () => {
+		document.querySelectorAll('.downloader_image_box').forEach((e) => {
+			e.style.width = listSlider.value + 'vw'
+			e.style.height = listSlider.value + 'vw'
+		})
+	})
+	container.appendChild(listSlider)
 
 	let images = document.createElement('div')
 	images.className = 'downloader_images'
@@ -173,6 +188,9 @@ function doJob () {
 		item.oncontextmenu = showContextMenu
 		let box = document.createElement('div')
 		box.className = 'downloader_image_box'
+		let value = listSlider.value
+		box.style.width = value + 'vw'
+		box.style.height = value + 'vw'
 		box.classList.add('image')
 		let v = document.createElement('span')
 		v.className = 'view'
@@ -229,6 +247,9 @@ function doJob () {
 		}
 		let box = document.createElement('div')
 		box.className = 'downloader_image_box'
+		let value = listSlider.value
+		box.style.width = value + 'vw'
+		box.style.height = value + 'vw'
 		box.classList.add('video')
 		box.appendChild(v)
 		box.appendChild(item)
