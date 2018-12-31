@@ -1,6 +1,6 @@
 {
   "name": "twitterimagedownloader",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Extension for Google Chrome",
   "scripts": {
     "test": "webpack --mode development",
