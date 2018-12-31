@@ -110,7 +110,7 @@ function doJob () {
 	more.innerText = '⏬'
 	more.onclick = event => {
 		event.stopPropagation()
-		scrollTo(0, 99999)
+		scrollTo(0, document.body.scrollHeight)
 	}
 	container.appendChild(more)
 	appendItems(images)
