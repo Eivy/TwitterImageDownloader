@@ -7,7 +7,8 @@
     "build": "webpack --mode production",
     "dev": "webpack --mode development",
     "watch": "webpack --mode development --watch",
-    "package": "npm run build && cd TwitterImageDownloader && zip -r -FS ../TwitterImageDownloader.xpi *"
+    "package": "npm run build && zip -j -r -FS TwitterImageDownloader.xpi public/*",
+    "clean": "rm -f public/*.js public/*.css"
   },
   "repository": {
     "type": "git",

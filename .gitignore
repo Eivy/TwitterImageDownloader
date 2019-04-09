@@ -1,6 +1,6 @@
 node_modules/
-TwitterImageDownloader/*.js
-TwitterImageDownloader/*.css
+public/*
 TwitterImageDownloader.pem
 TwitterImageDownloader.crx
 TwitterImageDownloader.xpi
+package/

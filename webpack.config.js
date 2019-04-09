@@ -4,12 +4,12 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = [
 	{
 		entry: {
-			'background': './background.js',
-			'inject': './inject.js',
-			'options': './options.js'
+			'background': './src/background.js',
+			'inject': './src/inject.js',
+			'options': './src/options.js'
 		},
 		output: {
-			path: path.join(__dirname, '/TwitterImageDownloader'),
+			path: path.join(__dirname, '/package'),
 			filename: '[name].js'
 		},
 		devtool: 'inline-source-map',
@@ -34,10 +34,10 @@ module.exports = [
 	},
 	{
 		entry: {
-			'base': './base.scss'
+			'base': './src/base.scss'
 		},
 		output: {
-			path: path.join(__dirname, 'TwitterImageDownloader'),
+			path: path.join(__dirname, '/package'),
 			filename: '[name].css'
 		},
 		module: {
