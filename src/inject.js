@@ -118,14 +118,19 @@ function doJob () {
 		appendItems(images)
 	})
 	try {
-		observer.observe(document.querySelector('.stream-container'), {attributes: true})
+		let trg = document.querySelector('.stream-container')
+		if (trg) {
+			observer.observe(trg, {attributes: true})
+		} else {
+			observer.observe(document.querySelector('main section'), {subtree: true, attributes: true})
+		}
 	} catch (ex) {
 		console.log(ex)
 	}
 	document.body.appendChild(container)
 
 	function appendItems (target) {
-		document.querySelectorAll('.AdaptiveMedia img[src*="pbs.twimg.com/media"], .AdaptiveStreamGridImage img[src*="pbs.twimg.com/media"], .MomentMediaItem img[src*="pbs.twimg.com/media"], .AdaptiveMedia div.PlayableMedia-player').forEach(async e => {
+		document.querySelectorAll('img[src*="pbs.twimg.com/media"], .AdaptiveMedia img[src*="pbs.twimg.com/media"], .AdaptiveStreamGridImage img[src*="pbs.twimg.com/media"], .MomentMediaItem img[src*="pbs.twimg.com/media"], .AdaptiveMedia div.PlayableMedia-player').forEach(async e => {
 			var item
 			if (e.tagName.toLowerCase() === 'div') {
 				item = getVideoItem(e)
