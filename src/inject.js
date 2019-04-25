@@ -1,3 +1,35 @@
+let scrolling = false
+function scrollToBottom () {
+	if (scrolling) {
+		return
+	}
+	scrolling = true
+	var scrollPosition = document.documentElement.scrollTop
+	let interval = setInterval(() => {
+		if (scrollPosition >= document.body.scrollHeight) {
+			clearInterval(interval)
+			scrolling = false
+		}
+		scrollPosition += window.parent.screen.height / 2
+		scrollTo(0, scrollPosition)
+	}, 80)
+}
+
+function getUrl (url) {
+	if (url.match(/\\?/) >= 0) {
+		let tmp = url.split('?')
+		let obj = {}
+		tmp[1].split('&').forEach((s) => {
+			let v = s.split('=')
+			obj[v[0]] = v[1]
+		})
+		if (obj['format']) {
+			url = tmp[0] + '.' + obj['format']
+		}
+	}
+	return url
+}
+
 function doJob () {
 	var d = document.querySelector('#imagedownloader')
 	if (d) {
@@ -16,7 +48,7 @@ function doJob () {
 
 	container.onscroll = () => {
 		if (container.scrollTop + container.clientHeight > container.scrollHeight - container.clientHeight / 2) {
-			scrollTo(0, document.body.scrollHeight)
+			scrollToBottom()
 		}
 	}
 
@@ -27,24 +59,8 @@ function doJob () {
 		event.stopPropagation()
 		let urls = []
 		document.querySelectorAll('#imagedownloader .downloader_image_box.selected.image img').forEach(e => {
-			let src = document.querySelector('img[src="' + e.src + '"]')
-			while (!src.hasAttribute('data-item-id')) {
-				src = src.parentElement
-			}
-			let imgs = null
-			if (src.classList.contains('AdaptiveStreamGridImage')) {
-				imgs = document.querySelectorAll('span[data-item-id="' + src.getAttribute('data-item-id') + '"] img')
-			} else {
-				imgs = document.querySelectorAll('div[data-item-id="' + src.getAttribute('data-item-id') + '"] .AdaptiveMedia img')
-			}
-			var idx = 0
-			for (;idx < imgs.length; idx++) {
-				if (imgs[idx].src === e.src) {
-					break
-				}
-			}
-			let tmp = e.src.split('.')
-			urls.push({url: e.src + ':orig', filename: [src.getAttribute('data-screen-name'), src.getAttribute('data-item-id'), idx].join('_') + '.' + tmp[tmp.length - 1]})
+			let url = getUrl(e.src) + ':orig'
+			urls.push({url, filename: e.filename})
 		})
 		let videos = document.querySelectorAll('#imagedownloader .downloader_image_box.selected.video img')
 		for (let video of videos) {
@@ -110,7 +126,7 @@ function doJob () {
 	more.innerText = '⏬'
 	more.onclick = event => {
 		event.stopPropagation()
-		scrollTo(0, document.body.scrollHeight)
+		scrollToBottom()
 	}
 	container.appendChild(more)
 	appendItems(images)
@@ -130,10 +146,12 @@ function doJob () {
 	document.body.appendChild(container)
 
 	function appendItems (target) {
-		document.querySelectorAll('img[src*="pbs.twimg.com/media"], .AdaptiveMedia img[src*="pbs.twimg.com/media"], .AdaptiveStreamGridImage img[src*="pbs.twimg.com/media"], .MomentMediaItem img[src*="pbs.twimg.com/media"], .AdaptiveMedia div.PlayableMedia-player').forEach(async e => {
+		document.querySelectorAll('article img[src*="pbs.twimg.com/media"], article video, .AdaptiveMedia img[src*="pbs.twimg.com/media"], .AdaptiveStreamGridImage img[src*="pbs.twimg.com/media"], .MomentMediaItem img[src*="pbs.twimg.com/media"], .AdaptiveMedia div.PlayableMedia-player').forEach(async e => {
 			var item
 			if (e.tagName.toLowerCase() === 'div') {
-				item = getVideoItem(e)
+				item = getVideoItemFromDiv(e)
+			} else if (e.tagName.toLowerCase() === 'video') {
+				item = getVideoItemFromVideo(e)
 			} else if (e.tagName.toLowerCase() === 'img') {
 				item = getImageItem(e)
 			}
@@ -191,6 +209,43 @@ function doJob () {
 		let item = document.createElement('img')
 		item.src = e.src
 		item.oncontextmenu = showContextMenu
+		var idx = 0
+		if (document.querySelector('main')) {
+			let p = e.parentElement
+			while (p.tagName.toLowerCase() !== 'article') {
+				p = p.parentElement
+			}
+			let tmp = p.querySelector('a[href*="/status/"]').href.split('/')
+			let tweetid = tmp[tmp.length - 1]
+			let userid = tmp[tmp.length - 3]
+			let url = getUrl(e.src)
+			tmp = url.split('.')
+			var imgs = p.querySelectorAll('img[src*="pbs.twimg.com/media"')
+			for (;idx < imgs.length; idx++) {
+				if (imgs[idx].src === e.src) {
+					break
+				}
+			}
+			item.filename = [userid, tweetid, idx].join('_') + '.' + tmp[tmp.length - 1]
+		} else {
+			let src = e
+			while (!src.hasAttribute('data-item-id')) {
+				src = src.parentElement
+			}
+			let imgs = null
+			if (src.classList.contains('AdaptiveStreamGridImage')) {
+				imgs = document.querySelectorAll('span[data-item-id="' + src.getAttribute('data-item-id') + '"] img')
+			} else {
+				imgs = document.querySelectorAll('div[data-item-id="' + src.getAttribute('data-item-id') + '"] .AdaptiveMedia img')
+			}
+			for (;idx < imgs.length; idx++) {
+				if (imgs[idx].src === e.src) {
+					break
+				}
+			}
+			let tmp = e.src.split('.')
+			item.filename = [src.getAttribute('data-screen-name'), src.getAttribute('data-item-id'), idx].join('_') + '.' + tmp[tmp.length - 1]
+		}
 		let box = document.createElement('div')
 		box.className = 'downloader_image_box'
 		let value = listSlider.value
@@ -222,7 +277,7 @@ function doJob () {
 		return box
 	}
 
-	function getVideoItem (e) {
+	function getVideoItemFromDiv (e) {
 		if (document.querySelector('.downloader_image_box img[src="' + e.style.backgroundImage.slice(5, -2) + '"]')) {
 			return null
 		}
@@ -233,6 +288,58 @@ function doJob () {
 			e = e.parentNode
 		}
 		let id = e.getAttribute('data-tweet-id')
+		item.setAttribute('id', id)
+		let v = document.createElement('span')
+		v.className = 'view'
+		v.innerText = '📹'
+		v.onclick = async (event) => {
+			event.stopPropagation()
+			let url = await getVideo(id)
+			if (url !== '') {
+				let video = document.createElement('video')
+				video.src = url
+				video.poster = item.src
+				video.setAttribute('controls', '')
+				video.setAttribute('autoplay', '')
+				video.setAttribute('loop', '')
+				showItem(video)
+			}
+		}
+		let box = document.createElement('div')
+		box.className = 'downloader_image_box'
+		let value = listSlider.value
+		box.style.width = value + 'vw'
+		box.style.height = value + 'vw'
+		box.classList.add('video')
+		box.appendChild(v)
+		box.appendChild(item)
+		box.onclick = event => {
+			event.stopPropagation()
+			closeContextMenu()
+			if (box.classList.contains('selected')) {
+				box.classList.remove('selected')
+			} else {
+				box.classList.add('selected')
+			}
+			badge.innerText = document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').length
+			badge.style.visibility = badge.innerText !== '0' ? 'visible' : 'hidden'
+		}
+		return box
+	}
+
+	function getVideoItemFromVideo (e) {
+		if (document.querySelector('.downloader_image_box img[src="' + e.poster + '"]')) {
+			return null
+		}
+		let item = document.createElement('img')
+		item.src = e.poster
+		item.oncontextmenu = showContextMenu
+		let p = e.parentNode
+		while (p.tagName.toLowerCase() !== 'article') {
+			p = p.parentElement
+		}
+		let tmp = p.querySelector('a[href*="/status/"]').href.split('/')
+		let id = tmp[tmp.length - 1]
 		item.setAttribute('id', id)
 		let v = document.createElement('span')
 		v.className = 'view'
