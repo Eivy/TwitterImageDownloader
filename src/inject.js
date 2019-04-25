@@ -4,9 +4,10 @@ function scrollToBottom () {
 		return
 	}
 	scrolling = true
+	var max = document.body.scrollHeight - window.parent.screen.height
 	var scrollPosition = document.documentElement.scrollTop
 	let interval = setInterval(() => {
-		if (scrollPosition >= document.body.scrollHeight) {
+		if (scrollPosition >= max) {
 			clearInterval(interval)
 			scrolling = false
 		}
