@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Eivy/TwitterImageDownloader#readme",
   "devDependencies": {
+    "acorn": "^6.1.1",
     "@babel/core": "^7.4.3",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
