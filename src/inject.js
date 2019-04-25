@@ -65,14 +65,11 @@ function doJob () {
 		})
 		let videos = document.querySelectorAll('#imagedownloader .downloader_image_box.selected.video img')
 		for (let video of videos) {
-			let src = document.querySelector('div[data-item-id="' + video.id + '"]')
 			if (video.hasOwnProperty('video_url')) {
-				let tmp = video.video_url.split('.')
-				urls.push({url: video.video_url, filename: [src.getAttribute('data-screen-name'), src.getAttribute('data-item-id')].join('_') + '.' + tmp[tmp.length - 1]})
+				urls.push({url: video.video_url, filename: video.filename})
 			} else {
 				let url = await getVideo(video.id)
-				let tmp = url.split('.')
-				urls.push({url, filename: [src.getAttribute('data-screen-name'), src.getAttribute('data-item-id')].join('_') + '.' + tmp[tmp.length - 1]})
+				urls.push({url, filename: video.filename})
 			}
 		}
 		chrome.runtime.sendMessage(urls)
@@ -290,6 +287,8 @@ function doJob () {
 		}
 		let id = e.getAttribute('data-tweet-id')
 		item.setAttribute('id', id)
+		let src = document.querySelector('div[data-item-id="' + id + '"]')
+		item.filename = [src.getAttribute('data-screen-name'), src.getAttribute('data-item-id')].join('_') + '.mp4'
 		let v = document.createElement('span')
 		v.className = 'view'
 		v.innerText = '📹'
@@ -340,8 +339,11 @@ function doJob () {
 			p = p.parentElement
 		}
 		let tmp = p.querySelector('a[href*="/status/"]').href.split('/')
+		let tweetid = tmp[tmp.length - 1]
+		let userid = tmp[tmp.length - 3]
 		let id = tmp[tmp.length - 1]
 		item.setAttribute('id', id)
+		item.filename = [userid, tweetid].join('_') + '.mp4'
 		let v = document.createElement('span')
 		v.className = 'view'
 		v.innerText = '📹'
