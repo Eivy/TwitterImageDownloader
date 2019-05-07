@@ -17,7 +17,7 @@ function scrollToBottom () {
 }
 
 function getUrl (url) {
-	if (url.match(/\\?/) >= 0) {
+	if (url.includes('?')) {
 		let tmp = url.split('?')
 		let obj = {}
 		tmp[1].split('&').forEach((s) => {
@@ -58,21 +58,25 @@ function doJob () {
 	ok.innerText = 'Download'
 	ok.onclick = async event => {
 		event.stopPropagation()
-		let urls = []
-		document.querySelectorAll('#imagedownloader .downloader_image_box.selected.image img').forEach(e => {
-			let url = getUrl(e.src) + ':orig'
-			urls.push({url, filename: e.filename})
-		})
-		let videos = document.querySelectorAll('#imagedownloader .downloader_image_box.selected.video img')
-		for (let video of videos) {
-			if (video.hasOwnProperty('video_url')) {
-				urls.push({url: video.video_url, filename: video.filename})
-			} else {
-				let url = await getVideo(video.id)
-				urls.push({url, filename: video.filename})
+		try {
+			let urls = []
+			document.querySelectorAll('#imagedownloader .downloader_image_box.selected.image img').forEach(e => {
+				let url = getUrl(e.src) + ':orig'
+				urls.push({url, filename: e.filename})
+			})
+			let videos = document.querySelectorAll('#imagedownloader .downloader_image_box.selected.video img')
+			for (let video of videos) {
+				if (video.hasOwnProperty('video_url')) {
+					urls.push({url: video.video_url, filename: video.filename})
+				} else {
+					let url = await getVideo(video.id)
+					urls.push({url, filename: video.filename})
+				}
 			}
+			chrome.runtime.sendMessage(urls)
+		} catch (ex) {
+			console.log(ex)
 		}
-		chrome.runtime.sendMessage(urls)
 		close()
 	}
 	let badge = document.createElement('span')
