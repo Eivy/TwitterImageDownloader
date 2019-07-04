@@ -148,7 +148,23 @@ function doJob () {
 	document.body.appendChild(container)
 
 	function appendItems (target) {
-		document.querySelectorAll('article img[src*="pbs.twimg.com/media"], article video, .AdaptiveMedia img[src*="pbs.twimg.com/media"], .AdaptiveStreamGridImage img[src*="pbs.twimg.com/media"], .MomentMediaItem img[src*="pbs.twimg.com/media"], .AdaptiveMedia div.PlayableMedia-player').forEach(async e => {
+		document.querySelectorAll('article').forEach(async a => {
+			let imgs = a.querySelectorAll('img[src*="pbs.twimg.com/media"]')
+			let item
+			for (let i = 0; i < imgs.length; i = i + 2) {
+				item = getImageItem(imgs[i])
+				if (item) {
+					target.appendChild(item)
+				}
+			}
+			for (let i = 1; i < imgs.length; i = i + 2) {
+				item = getImageItem(imgs[i])
+				if (item) {
+					target.appendChild(item)
+				}
+			}
+		})
+		document.querySelectorAll('article video, .AdaptiveMedia img[src*="pbs.twimg.com/media"], .AdaptiveStreamGridImage img[src*="pbs.twimg.com/media"], .MomentMediaItem img[src*="pbs.twimg.com/media"], .AdaptiveMedia div.PlayableMedia-player').forEach(async e => {
 			var item
 			if (e.tagName.toLowerCase() === 'div') {
 				item = getVideoItemFromDiv(e)
