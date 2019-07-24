@@ -242,7 +242,12 @@ function doJob () {
 			while (p.tagName.toLowerCase() !== 'article') {
 				p = p.parentElement
 			}
-			let tmp = p.querySelector('a[href*="/status/"]').href.split('/')
+			let tmp
+			if (document.location.toString().indexOf('/status/') >= 0) {
+				tmp = document.location.toString().split('/')
+			} else {
+				tmp = p.querySelector('a[href*="/status/"]').href.split('/')
+			}
 			let tweetid = tmp[tmp.length - 1]
 			let userid = tmp[tmp.length - 3]
 			let url = getUrl(e.src)
