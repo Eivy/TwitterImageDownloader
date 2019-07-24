@@ -77,6 +77,7 @@ function doJob () {
 		} catch (ex) {
 			console.log(ex)
 		}
+		deselectAll()
 		close()
 	}
 	let badge = document.createElement('span')
@@ -91,14 +92,22 @@ function doJob () {
 		close()
 	}
 
+	let checkbox = document.createElement('input')
+	checkbox.type = 'checkbox'
 	let select = document.createElement('button')
+	select.appendChild(checkbox)
 	select.className = 'select'
 	select.innerText = 'Select All'
 	select.onclick = event => {
 		event.stopPropagation()
-		document.querySelectorAll('#imagedownloader .downloader_image_box').forEach(e => {
-			e.classList.add('selected')
-		})
+		if (checkbox.checked) {
+			deselectAll()
+		} else {
+			document.querySelectorAll('#imagedownloader .downloader_image_box').forEach(e => {
+				e.classList.add('selected')
+			})
+		}
+		checkbox.checked = !checkbox.checked
 	}
 
 	container.appendChild(ok)
@@ -575,6 +584,12 @@ function doJob () {
 	function close () {
 		// observer.disconnect()
 		container.style.display = 'none'
+	}
+
+	function deselectAll () {
+		document.querySelectorAll('#imagedownloader .downloader_image_box.selected').forEach(e => {
+			e.classList.remove('selected')
+		})
 	}
 }
 
