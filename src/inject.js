@@ -201,8 +201,12 @@ function doJob () {
 		scroll.innerHTML = 'Scroll to in timeline'
 		scroll.addEventListener('click', () => {
 			close()
-			let item = document.querySelector('img[src="' + e.target.src + '"],div.PlayableMedia-player[style*="' + e.target.src + '"]')
-			item.scrollIntoView()
+			if (e.target.getAttribute('pos')) {
+				window.scroll(0, e.target.getAttribute('pos'))
+			} else {
+				let item = document.querySelector('img[src="' + e.target.src + '"],div.PlayableMedia-player[style*="' + e.target.src + '"]')
+				item.scrollIntoView()
+			}
 		})
 		let view = document.createElement('li')
 		view.innerHTML = 'Show Fullscreen'
@@ -242,6 +246,7 @@ function doJob () {
 			while (p.tagName.toLowerCase() !== 'article') {
 				p = p.parentElement
 			}
+			item.setAttribute('pos', window.pageYOffset + p.getBoundingClientRect().top)
 			let tmp
 			if (document.location.toString().indexOf('/status/') >= 0) {
 				tmp = document.location.toString().split('/')
