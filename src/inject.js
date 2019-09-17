@@ -198,7 +198,7 @@ function doJob () {
 			closeContextMenu()
 		})
 		let scroll = document.createElement('li')
-		scroll.innerHTML = 'Scroll to in timeline'
+		scroll.innerText = 'Scroll to in timeline'
 		scroll.addEventListener('click', () => {
 			close()
 			if (e.target.getAttribute('pos')) {
@@ -209,12 +209,12 @@ function doJob () {
 			}
 		})
 		let view = document.createElement('li')
-		view.innerHTML = 'Show Fullscreen'
+		view.innerText = 'Show Fullscreen'
 		view.addEventListener('click', () => {
 			e.target.previousElementSibling.click()
 		})
 		let newtab = document.createElement('li')
-		newtab.innerHTML = 'Open image in new tab'
+		newtab.innerText = 'Open image in new tab'
 		newtab.addEventListener('click', () => {
 			window.open(e.target.src)
 		})
@@ -430,7 +430,7 @@ function doJob () {
 			shown.remove()
 		}
 		let close = document.createElement('span')
-		close.innerHTML = '❌'
+		close.innerText = '❌'
 		close.className = 'closer'
 		close.onclick = event => {
 			event.stopPropagation()
@@ -491,9 +491,9 @@ function doJob () {
 		slider.addEventListener('click', event => { event.stopPropagation() })
 		let input = document.createElement('span')
 		let sbefore = document.createElement('span')
-		sbefore.innerHTML = '0.1x'
+		sbefore.innerText = '0.1x'
 		let safter = document.createElement('span')
-		safter.innerHTML = '10x'
+		safter.innerText = '10x'
 		input.appendChild(sbefore)
 		input.appendChild(slider)
 		input.appendChild(safter)
