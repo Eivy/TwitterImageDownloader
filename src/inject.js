@@ -107,6 +107,8 @@ function doJob () {
 				e.classList.add('selected')
 			})
 		}
+		badge.innerText = document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').length
+		badge.style.visibility = badge.innerText !== '0' ? 'visible' : 'hidden'
 		checkbox.checked = !checkbox.checked
 	}
 
