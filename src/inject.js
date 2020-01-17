@@ -602,6 +602,8 @@ function doJob () {
 		document.querySelectorAll('#imagedownloader .downloader_image_box.selected').forEach(e => {
 			e.classList.remove('selected')
 		})
+		badge.innerText = document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').length
+		badge.style.visibility = badge.innerText !== '0' ? 'visible' : 'hidden'
 	}
 }
 
