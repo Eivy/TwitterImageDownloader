@@ -70,7 +70,11 @@ function doJob () {
 					urls.push({url: video.video_url, filename: video.filename})
 				} else {
 					let url = await getVideo(video.id)
-					urls.push({url, filename: video.filename})
+					if (url !== '' && url !== undefined) {
+						urls.push({url, filename: video.filename})
+					} else {
+						video.parentElement.classList.add('failed')
+					}
 				}
 			}
 			chrome.runtime.sendMessage(urls)
@@ -78,7 +82,9 @@ function doJob () {
 			console.log(ex)
 		}
 		deselectAll()
-		close()
+		if (document.querySelectorAll('.failed').length < 1) {
+			close()
+		}
 	}
 	let badge = document.createElement('span')
 	badge.className = 'badge'
@@ -336,7 +342,7 @@ function doJob () {
 		v.onclick = async (event) => {
 			event.stopPropagation()
 			let url = await getVideo(id)
-			if (url !== '') {
+			if (url && url !== '') {
 				let video = document.createElement('video')
 				video.src = url
 				video.poster = item.src
@@ -344,6 +350,8 @@ function doJob () {
 				video.setAttribute('autoplay', '')
 				video.setAttribute('loop', '')
 				showItem(video)
+			} else {
+				e.parentElement.classList.add('failed')
 			}
 		}
 		let box = document.createElement('div')
@@ -391,7 +399,7 @@ function doJob () {
 		v.onclick = async (event) => {
 			event.stopPropagation()
 			let url = await getVideo(id)
-			if (url !== '') {
+			if (url && url !== '') {
 				let video = document.createElement('video')
 				video.src = url
 				video.poster = item.src
@@ -399,6 +407,8 @@ function doJob () {
 				video.setAttribute('autoplay', '')
 				video.setAttribute('loop', '')
 				showItem(video)
+			} else {
+				e.parentElement.classList.add('failed')
 			}
 		}
 		let box = document.createElement('div')
@@ -521,6 +531,9 @@ function doJob () {
 		xhr.setRequestHeader('authorization', auth.authorization)
 		xhr.setRequestHeader('x-csrf-token', auth.csrf_token)
 		xhr.send()
+		if (xhr.status !== 200) {
+			return
+		}
 		let data = JSON.parse(xhr.responseText)
 		if (data.hasOwnProperty('extended_entities')) {
 			for (let m of data.extended_entities.media) {
@@ -539,6 +552,9 @@ function doJob () {
 			xhr.setRequestHeader('authorization', auth.authorization)
 			xhr.setRequestHeader('x-csrf-token', auth.csrf_token)
 			xhr.send()
+			if (xhr.status !== 200) {
+				return
+			}
 			data = JSON.parse(xhr.responseText)
 			if (data.track.playbackType === 'video/mp4') {
 				url = data.track.playbackUrl

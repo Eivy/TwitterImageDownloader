@@ -81,38 +81,23 @@ div#imagedownloader {
 				border: 3px solid #26a69b;
 				box-shadow: 0 0 10px 0 rgba(38,166,155,0.8);
 			}
+			&.failed {
+				img {
+					border: 3px solid #ff0000;
+					box-shadow: 0 0 10px 0 rgba(38,166,155,0.8);
+				}
+			}
+			&.failed::after {
+				content: 'CANNOT DOWNLOAD';
+				color: red;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
 			span.view {
 				position: absolute;
 				bottom: 5px;
 				right: 5px;
-				cursor: pointer;
-				&:hover {
-					background-color: rgba(38,166,155,0.8);
-				}
-			}
-		}
-		div.downloader_video_box {
-			width: 25vw;
-			height: 25vw;;
-			overflow: hidden;
-			padding: 10px;
-			margin: 0;
-			position: relative;
-			text-align: center;
-			video {
-				object-fit: cover;
-				width: 100%;
-				height: 100%;
-				box-sizing: border-box;
-			}
-			&.selected img {
-				border: 3px solid #26a69b;
-				box-shadow: 0 0 10px 0 rgba(38,166,155,0.8);
-			}
-			span.view {
-				position: absolute;
-				bottom: 1rem;
-				right: 1rem;
 				cursor: pointer;
 				&:hover {
 					background-color: rgba(38,166,155,0.8);
