@@ -113,8 +113,7 @@ function doJob () {
 				e.classList.add('selected')
 			})
 		}
-		badge.innerText = document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').length
-		badge.style.visibility = badge.innerText !== '0' ? 'visible' : 'hidden'
+		updateBadge()
 		checkbox.checked = !checkbox.checked
 	}
 
@@ -316,8 +315,7 @@ function doJob () {
 			} else {
 				box.classList.add('selected')
 			}
-			badge.innerText = document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').length
-			badge.style.visibility = badge.innerText !== '0' ? 'visible' : 'hidden'
+			updateBadge()
 		}
 		return box
 	}
@@ -370,8 +368,7 @@ function doJob () {
 			} else {
 				box.classList.add('selected')
 			}
-			badge.innerText = document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').length
-			badge.style.visibility = badge.innerText !== '0' ? 'visible' : 'hidden'
+			updateBadge()
 		}
 		return box
 	}
@@ -427,8 +424,7 @@ function doJob () {
 			} else {
 				box.classList.add('selected')
 			}
-			badge.innerText = document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').length
-			badge.style.visibility = badge.innerText !== '0' ? 'visible' : 'hidden'
+			updateBadge()
 		}
 		return box
 	}
@@ -618,6 +614,10 @@ function doJob () {
 		document.querySelectorAll('#imagedownloader .downloader_image_box.selected').forEach(e => {
 			e.classList.remove('selected')
 		})
+		updateBadge()
+	}
+
+	function updateBadge () {
 		badge.innerText = document.querySelectorAll('#imagedownloader .downloader_image_box.selected img').length
 		badge.style.visibility = badge.innerText !== '0' ? 'visible' : 'hidden'
 	}
