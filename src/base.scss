@@ -57,7 +57,13 @@ div#imagedownloader {
 		&.select {
 			background-color: #000;
 			color: #fff;
+			right: 5rem;
+			bottom: 5rem;
+		}
+		&.dropdown {
+			background-color: #888;
 			right: 2rem;
+			padding: 0 auto;
 			bottom: 5rem;
 		}
 	}
@@ -183,6 +189,18 @@ div#imagedownloader {
 				background: skyblue;
 				color: white;
 			}
+		}
+	}
+	div.dropdown {
+		padding: 1rem;
+		position: fixed;
+		bottom: 8rem;
+		right: 2rem;
+		background-color: white;
+		visibility: hidden;
+		z-index: 1;
+		label {
+			padding: 0 1rem 0 0;
 		}
 	}
 }

@@ -101,25 +101,49 @@ function doJob () {
 	let checkbox = document.createElement('input')
 	checkbox.type = 'checkbox'
 	let select = document.createElement('button')
-	select.appendChild(checkbox)
 	select.className = 'select'
 	select.innerText = 'Select All'
-	select.onclick = event => {
-		event.stopPropagation()
-		if (checkbox.checked) {
-			deselectAll()
-		} else {
-			document.querySelectorAll('#imagedownloader .downloader_image_box').forEach(e => {
-				e.classList.add('selected')
-			})
-		}
-		updateBadge()
-		checkbox.checked = !checkbox.checked
-	}
+	select.onclick = selectAll
+	let dropdownButton = document.createElement('button')
+	dropdownButton.className = 'dropdown'
+	dropdownButton.innerText = '▲'
+	dropdownButton.onclick = showSelectFilter
+	let dropdown = document.createElement('div')
+	dropdown.className = 'dropdown'
+	dropdown.onclick = (event) => event.stopPropagation()
+	let checkImage = document.createElement('input')
+	checkImage.id = 'checkbox_image'
+	checkImage.type = 'checkbox'
+	checkImage.checked = true
+	let labelImage = document.createElement('label')
+	labelImage.setAttribute('for', 'checkbox_image')
+	labelImage.innerText = 'Image'
+	let checkVideo = document.createElement('input')
+	checkVideo.id = 'checkbox_video'
+	checkVideo.type = 'checkbox'
+	checkVideo.checked = true
+	let labelVideo = document.createElement('label')
+	labelVideo.setAttribute('for', 'checkbox_video')
+	labelVideo.innerText = 'Video'
+	let checkRetweet = document.createElement('input')
+	checkRetweet.id = 'checkbox_retweet'
+	checkRetweet.type = 'checkbox'
+	checkRetweet.checked = true
+	let labelRetweet = document.createElement('label')
+	labelRetweet.setAttribute('for', 'checkbox_retweet')
+	labelRetweet.innerText = 'Retweet'
+	dropdown.appendChild(checkImage)
+	dropdown.appendChild(labelImage)
+	dropdown.appendChild(checkVideo)
+	dropdown.appendChild(labelVideo)
+	dropdown.appendChild(checkRetweet)
+	dropdown.appendChild(labelRetweet)
 
 	container.appendChild(ok)
 	container.appendChild(cancel)
 	container.appendChild(select)
+	container.appendChild(dropdownButton)
+	container.appendChild(dropdown)
 
 	let listSlider = document.createElement('input')
 	listSlider.id = 'size'
@@ -170,6 +194,9 @@ function doJob () {
 			for (let i = 0; i < imgs.length; i = i + 2) {
 				item = getImageItem(imgs[i])
 				if (item) {
+					if (a.firstChild.firstChild.querySelector('a')) {
+						item.classList.add('retweet')
+					}
 					target.appendChild(item)
 				}
 			}
@@ -190,6 +217,16 @@ function doJob () {
 				item = getImageItem(e)
 			}
 			if (item) {
+				let parent = e.parentElement
+				console.log(parent)
+				console.log(parent.classList.contains('tweet'))
+				while (!(parent.getAttribute('haspopup') && parent.getAttribute('haspopup') === 'article') && !parent.classList.contains('tweet')) {
+					parent = parent.parentElement
+					console.log(parent)
+				}
+				if (parent.querySelector('div:first-child>div.context:first-child a')) {
+					item.classList.add('retweet')
+				}
 				target.appendChild(item)
 			}
 		})
@@ -317,6 +354,7 @@ function doJob () {
 			}
 			updateBadge()
 		}
+		box.classList.add('image')
 		return box
 	}
 
@@ -370,6 +408,7 @@ function doJob () {
 			}
 			updateBadge()
 		}
+		box.classList.add('video')
 		return box
 	}
 
@@ -426,6 +465,7 @@ function doJob () {
 			}
 			updateBadge()
 		}
+		box.classList.add('video')
 		return box
 	}
 
@@ -610,11 +650,44 @@ function doJob () {
 		container.style.display = 'none'
 	}
 
+	function selectAll (event, filter) {
+		event.stopPropagation()
+		if (checkbox.checked) {
+			deselectAll()
+		} else {
+			document.querySelectorAll('#imagedownloader .downloader_image_box').forEach(e => {
+				e.classList.add('selected')
+			})
+			if (!checkImage.checked) {
+				document.querySelectorAll('#imagedownloader .downloader_image_box.image').forEach(e => {
+					e.classList.remove('selected')
+				})
+			}
+			if (!checkVideo.checked) {
+				document.querySelectorAll('#imagedownloader .downloader_image_box.video').forEach(e => {
+					e.classList.remove('selected')
+				})
+			}
+			if (!checkRetweet.checked) {
+				document.querySelectorAll('#imagedownloader .downloader_image_box.retweet').forEach(e => {
+					e.classList.remove('selected')
+				})
+			}
+			updateBadge()
+		}
+		checkbox.checked = !checkbox.checked
+	}
+
 	function deselectAll () {
 		document.querySelectorAll('#imagedownloader .downloader_image_box.selected').forEach(e => {
 			e.classList.remove('selected')
 		})
 		updateBadge()
+	}
+
+	function showSelectFilter (event) {
+		event.stopPropagation()
+		dropdown.style.visibility = dropdown.style.visibility === 'visible' ? 'hidden' : 'visible'
 	}
 
 	function updateBadge () {
