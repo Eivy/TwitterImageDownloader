@@ -139,11 +139,11 @@ function doJob () {
 	dropdown.appendChild(checkRetweet)
 	dropdown.appendChild(labelRetweet)
 
-	container.appendChild(ok)
 	container.appendChild(cancel)
 	container.appendChild(select)
 	container.appendChild(dropdownButton)
 	container.appendChild(dropdown)
+	container.appendChild(ok)
 
 	let listSlider = document.createElement('input')
 	listSlider.id = 'size'
